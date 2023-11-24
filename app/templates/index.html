@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script>
+        var ws = new WebSocket("ws://localhost:8000/api/ws");
+        ws.onmessage = function (event) {
+            alert("Приложение " + event.data + " было закрыто")
+        };
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    {% if apps|length > 0 %}
+    <div>
+        <h1>Ваши приложения:</h1>
+    </div>
+    {% for app in apps %}
+    <div>
+        <h2>{{app.path}}:
+            {% if app.is_running %}
+            включено
+            {% else %}
+            выключено
+            {% endif %}
+        </h2>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="mb-4">
+        <h1>Приложений на рабочем столе нет</h1>
+    </div>
+    {% endif %}
+</body>
+
+</html>
